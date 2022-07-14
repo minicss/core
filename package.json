@@ -21,6 +21,7 @@
     "minicss"
   ],
   "main": "build/cjs/index.js",
+  "types": "build/cjs/index.d.ts",
   "scripts": {
     "build": "tsc",
     "build:watch": "npm run build -- --watch",
