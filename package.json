@@ -22,6 +22,8 @@
   ],
   "main": "build/cjs/index.js",
   "scripts": {
+    "build": "tsc",
+    "build:watch": "npm run build -- --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
