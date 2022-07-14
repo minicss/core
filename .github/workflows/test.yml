@@ -61,3 +61,17 @@ jobs:
 
       - name: Build for CommonJS
         run: npm run build
+
+      - name: Get number of CPU cores
+        id: cpu-cores
+        uses: SimenB/github-actions-cpu-cores@v1
+
+      - name: Test the project
+        run: npm run test:ci -- --maxWorkers ${{ steps.cpu-cores.outputs.count }}
+
+      - name: Upload coverage to CodeCov
+        uses: codecov/codecov-action@v3
+        if: ${{ github.event_name != 'schedule' }}
+        with:
+          env_vars: OS,NODE_VERSION,REF
+          fail_ci_if_error: true
