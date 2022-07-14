@@ -1,0 +1,27 @@
+{
+  "name": "@minicss/core",
+  "version": "0.0.0",
+  "description": "MiniCSS core package",
+  "license": "MIT",
+  "author": "Ardalan Amini <ardalanamini22@gmail.com> (https://ardalanamini.com/)",
+  "homepage": "https://github.com/minicss/core#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minicss/core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/minicss/core/issues"
+  },
+  "keywords": [
+    "min",
+    "mini",
+    "minify",
+    "css",
+    "core",
+    "minicss"
+  ],
+  "main": "build/cjs/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
