@@ -1,0 +1,2 @@
+# core
+MiniCSS core package
