@@ -45,6 +45,7 @@
     "build:hybrid": "scripts/pre-build.sh && npm run build && npm run build:esm && scripts/post-build.sh",
     "lint": "eslint src",
     "lint:fix": "npm run lint -- --fix",
+    "docs": "typedoc",
     "test": "node --no-compilation-cache --expose-gc node_modules/jest/bin/jest --passWithNoTests --logHeapUsage",
     "test:coverage": "npm test -- --coverage",
     "test:ci": "npm run test:coverage -- --ci --verbose --no-cache"

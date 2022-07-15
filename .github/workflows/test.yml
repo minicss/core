@@ -65,6 +65,9 @@ jobs:
       - name: Build for ECMAScript
         run: npm run build:esm
 
+      - name: Generate code documents
+        run: npm run docs
+
       - name: Get number of CPU cores
         id: cpu-cores
         uses: SimenB/github-actions-cpu-cores@v1
