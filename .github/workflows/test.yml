@@ -37,7 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup node modules cache
+      - name: Set up node modules cache
         id: node-modules-cache
         uses: actions/cache@v3
         with:
@@ -61,6 +61,9 @@ jobs:
 
       - name: Build for CommonJS
         run: npm run build
+
+      - name: Build for ECMAScript
+        run: npm run build:esm
 
       - name: Get number of CPU cores
         id: cpu-cores
