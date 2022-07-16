@@ -43,14 +43,15 @@
     "build:esm": "npm run build -- -p tsconfig.esm.json",
     "build:esm:watch": "npm run build:esm -- --watch",
     "build:hybrid": "scripts/pre-build.sh && npm run build && npm run build:esm && scripts/post-build.sh",
-    "lint": "eslint src",
+    "lint": "eslint src __tests__",
     "lint:fix": "npm run lint -- --fix",
     "docs": "typedoc",
-    "test": "node --no-compilation-cache --expose-gc node_modules/jest/bin/jest --passWithNoTests --logHeapUsage",
+    "test": "node --no-compilation-cache --expose-gc node_modules/jest/bin/jest --logHeapUsage",
     "test:coverage": "npm test -- --coverage",
     "test:ci": "npm run test:coverage -- --ci --verbose --no-cache"
   },
   "devDependencies": {
+    "@types/jest": "^28.1.6",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",
     "eslint": "^8.19.0",
