@@ -51,6 +51,7 @@
     "test:ci": "npm run test:coverage -- --ci --verbose --no-cache"
   },
   "devDependencies": {
+    "@types/jest": "^28.1.6",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",
     "eslint": "^8.19.0",
