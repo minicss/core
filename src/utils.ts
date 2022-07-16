@@ -10,6 +10,8 @@ const LAST_CHAR = DICTIONARY[DICTIONARY_LENGTH - 1];
 
 const LAST_REGEX = new RegExp(`^${ LAST_CHAR }*$`);
 
+const LAST_CHAR_REGEX = new RegExp(`${ LAST_CHAR }+$`);
+
 /**
  * Generates a new string based on the last provided one.
  * @param last
@@ -21,17 +23,17 @@ export function generate(last: string | null): string {
 
   if (LAST_REGEX.test(last)) return `${ FIRST_SINGLE_CHAR }${ FIRST_CHAR.repeat(length) }`;
 
-  if (last.endsWith(LAST_CHAR)) {
-    let fresh = "";
+  const match = last.match(LAST_CHAR_REGEX);
 
-    if (length > 1) {
-      if (length > 2) fresh += last.substring(0, length - 2);
+  if (match == null) return `${ last.substring(0, length - 1) }${ DICTIONARY[DICTIONARY.indexOf(last[length - 1]) + 1] }`;
 
-      fresh += DICTIONARY[(DICTIONARY.indexOf(last[length - 2]) + 1) % DICTIONARY_LENGTH];
-    }
+  const { index } = match as { index: number };
 
-    return `${ fresh }${ FIRST_CHAR }`;
-  }
-
-  return `${ last.substring(0, length - 1) }${ DICTIONARY[DICTIONARY.indexOf(last[length - 1]) + 1] }`;
+  return `${
+    last.substring(0, index - 1)
+  }${
+    DICTIONARY[DICTIONARY.indexOf(last[index - 1]) + 1]
+  }${
+    FIRST_CHAR.repeat(match[0].length)
+  }`;
 }
