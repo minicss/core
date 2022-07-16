@@ -17,8 +17,10 @@ export default class Node extends Map<string, string> {
    * @example
    * const node = new Node;
    */
-  // eslint-disable-next-line max-len
-  public constructor(node?: IterableIterator<[string, string]> | Node | ReadonlyArray<readonly [string, string]> | null) {
+  public constructor(node?: IterableIterator<[string, string]>
+  | Node
+  | ReadonlyArray<readonly [string, string]>
+  | null) {
     if (node instanceof Node) {
       super(node.entries());
 
