@@ -1,6 +1,6 @@
 {
   "name": "@minicss/core",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha.1",
   "description": "MiniCSS core package",
   "license": "MIT",
   "author": "Ardalan Amini <ardalanamini22@gmail.com> (https://ardalanamini.com/)",
