@@ -2,13 +2,11 @@ const DICTIONARY = "0123456789_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVW
 
 const DICTIONARY_LENGTH = DICTIONARY.length;
 
-const FIRST_SINGLE_CHAR = DICTIONARY[10];
+const FIRST_SINGLE_CHAR = "_" as const;
 
 const FIRST_CHAR = DICTIONARY[0];
 
 const LAST_CHAR = DICTIONARY[DICTIONARY_LENGTH - 1];
-
-const LAST_REGEX = new RegExp(`^${ LAST_CHAR }*$`);
 
 const LAST_CHAR_REGEX = new RegExp(`${ LAST_CHAR }+$`);
 
@@ -17,17 +15,17 @@ const LAST_CHAR_REGEX = new RegExp(`${ LAST_CHAR }+$`);
  * @param last
  */
 export function generate(last: string | null): string {
-  if (last == null) return FIRST_SINGLE_CHAR;
+  if (!last) return FIRST_SINGLE_CHAR;
 
   const length = last.length;
-
-  if (LAST_REGEX.test(last)) return `${ FIRST_SINGLE_CHAR }${ FIRST_CHAR.repeat(length) }`;
 
   const match = last.match(LAST_CHAR_REGEX);
 
   if (match == null) return `${ last.substring(0, length - 1) }${ DICTIONARY[DICTIONARY.indexOf(last[length - 1]) + 1] }`;
 
   const { index } = match as { index: number };
+
+  if (index === 0) return `${ FIRST_SINGLE_CHAR }${ FIRST_CHAR.repeat(length) }`;
 
   return `${
     last.substring(0, index - 1)
