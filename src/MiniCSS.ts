@@ -1,4 +1,5 @@
 import Node from "./Node.js";
+import { MiniCSSJSONOutputI } from "./utils.js";
 
 /**
  *
@@ -34,14 +35,53 @@ export default class MiniCSS {
    * @param base
    * @example
    * const miniCSS = new MiniCSS;
+   * @example
+   * const clonedMiniCSS = new MiniCSS(miniCSS);
+   * @example
+   * const miniCSS = new MiniCSS({
+   *   classes: {
+   *     firstClass : "_",
+   *     secondClass: "a",
+   *   },
+   *   ids: {
+   *     firstId : "_",
+   *     secondId: "a",
+   *   },
+   *   keyframes: {
+   *     firstKeyframe : "_",
+   *     secondKeyframe: "a",
+   *   },
+   *   variables: {
+   *     firstVariable : "_",
+   *     secondVariable: "a",
+   *   },
+   * });
    */
-  public constructor(base?: MiniCSS) {
+  public constructor(base?: MiniCSS | MiniCSSJSONOutputI) {
     if (base == null) return;
 
-    this.#classes = base.#classes.clone();
-    this.#ids = base.#ids.clone();
-    this.#keyframes = base.#keyframes.clone();
-    this.#variables = base.#variables.clone();
+    if (base instanceof MiniCSS) {
+      this.#classes = base.#classes.clone();
+      this.#ids = base.#ids.clone();
+      this.#keyframes = base.#keyframes.clone();
+      this.#variables = base.#variables.clone();
+
+      return;
+    }
+
+    this.#classes = Node.fromJSON(base.classes);
+    this.#ids = Node.fromJSON(base.ids);
+    this.#keyframes = Node.fromJSON(base.keyframes);
+    this.#variables = Node.fromJSON(base.variables);
+  }
+
+  /**
+   * Creates a new MiniCSS instance from the JSON output.
+   * @example
+   * const miniCSS = MiniCSS.fromJSON(obj);
+   */
+  public static fromJSON(map: MiniCSSJSONOutputI): MiniCSS {
+    return new MiniCSS(map);
   }
 
   /**
@@ -90,7 +130,7 @@ export default class MiniCSS {
    * @example
    * const obj = JSON.stringify(miniCSS);
    */
-  public toJSON(): Record<"classes" | "ids" | "keyframes" | "variables", Record<string, string>> {
+  public toJSON(): MiniCSSJSONOutputI {
     return {
       classes  : this.#classes.toJSON(),
       ids      : this.#ids.toJSON(),

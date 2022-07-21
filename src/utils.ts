@@ -35,3 +35,10 @@ export function generate(last: string | null): string {
     FIRST_CHAR.repeat(match[0].length)
   }`;
 }
+
+export interface MiniCSSJSONOutputI {
+  classes: Record<string, string>;
+  ids: Record<string, string>;
+  keyframes: Record<string, string>;
+  variables: Record<string, string>;
+}
