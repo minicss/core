@@ -18,6 +18,12 @@ export default class MiniCSS {
   #ids = new Node;
 
   /**
+   * CSS keyframes map.
+   * @private
+   */
+  #keyframes = new Node;
+
+  /**
    * CSS variable map.
    * @private
    */
@@ -34,6 +40,7 @@ export default class MiniCSS {
 
     this.#classes = base.#classes.clone();
     this.#ids = base.#ids.clone();
+    this.#keyframes = base.#keyframes.clone();
     this.#variables = base.#variables.clone();
   }
 
@@ -67,16 +74,27 @@ export default class MiniCSS {
   }
 
   /**
+   * Maps the given CSS variable to an already generated one or generate a new one.
+   * @param name
+   * @example
+   * const name = miniCSS.keyframe("keyframe");
+   */
+  public keyframe(name: string): string {
+    return this.#keyframes.name(name);
+  }
+
+  /**
    * Converts the current miniCSS instance to a JSON compatible object.
    * @example
    * const obj = miniCSS.toJSON();
    * @example
    * const obj = JSON.stringify(miniCSS);
    */
-  public toJSON(): Record<"classes" | "ids" | "variables", Record<string, string>> {
+  public toJSON(): Record<"classes" | "ids" | "keyframes" | "variables", Record<string, string>> {
     return {
       classes  : this.#classes.toJSON(),
       ids      : this.#ids.toJSON(),
+      keyframes: this.#keyframes.toJSON(),
       variables: this.#variables.toJSON(),
     };
   }
