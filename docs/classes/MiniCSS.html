@@ -41,24 +41,31 @@
 <a href="MiniCSS.html#keyframe" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>keyframe</span></a>
 <a href="MiniCSS.html#toJSON" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>toJSON</span></a>
 <a href="MiniCSS.html#variable" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>variable</span></a>
+<a href="MiniCSS.html#fromJSON" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>fromJSON</span></a>
 </div></section></div></details></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Constructors</h2>
 <section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class"><a id="constructor" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-<li class="tsd-signature tsd-anchor-link" id="constructor.new_MiniCSS">new <wbr/>MiniCSS<span class="tsd-signature-symbol">(</span>base<span class="tsd-signature-symbol">?: </span><a href="MiniCSS.html" class="tsd-signature-type" data-tsd-kind="Class">MiniCSS</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="MiniCSS.html" class="tsd-signature-type" data-tsd-kind="Class">MiniCSS</a><a href="#constructor.new_MiniCSS" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="constructor.new_MiniCSS">new <wbr/>MiniCSS<span class="tsd-signature-symbol">(</span>base<span class="tsd-signature-symbol">?: </span><a href="../interfaces/MiniCSSJSONOutputI.html" class="tsd-signature-type" data-tsd-kind="Interface">MiniCSSJSONOutputI</a><span class="tsd-signature-symbol"> | </span><a href="MiniCSS.html" class="tsd-signature-type" data-tsd-kind="Class">MiniCSS</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="MiniCSS.html" class="tsd-signature-type" data-tsd-kind="Class">MiniCSS</a><a href="#constructor.new_MiniCSS" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>New MiniCSS instance.</p>
 
 <h3>Example</h3><pre><code class="language-ts"><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">miniCSS</span><span class="hl-0"> = </span><span class="hl-1">new</span><span class="hl-0"> </span><span class="hl-3">MiniCSS</span><span class="hl-0">;</span>
+</code></pre>
+
+<h3>Example</h3><pre><code class="language-ts"><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">clonedMiniCSS</span><span class="hl-0"> = </span><span class="hl-1">new</span><span class="hl-0"> </span><span class="hl-4">MiniCSS</span><span class="hl-0">(</span><span class="hl-3">miniCSS</span><span class="hl-0">);</span>
+</code></pre>
+
+<h3>Example</h3><pre><code class="language-ts"><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">miniCSS</span><span class="hl-0"> = </span><span class="hl-1">new</span><span class="hl-0"> </span><span class="hl-4">MiniCSS</span><span class="hl-0">({</span><br/><span class="hl-0">  </span><span class="hl-3">classes:</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-3">firstClass :</span><span class="hl-0"> </span><span class="hl-5">&quot;_&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-3">secondClass:</span><span class="hl-0"> </span><span class="hl-5">&quot;a&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  </span><span class="hl-3">ids:</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-3">firstId :</span><span class="hl-0"> </span><span class="hl-5">&quot;_&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-3">secondId:</span><span class="hl-0"> </span><span class="hl-5">&quot;a&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  </span><span class="hl-3">keyframes:</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-3">firstKeyframe :</span><span class="hl-0"> </span><span class="hl-5">&quot;_&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-3">secondKeyframe:</span><span class="hl-0"> </span><span class="hl-5">&quot;a&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  </span><span class="hl-3">variables:</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-3">firstVariable :</span><span class="hl-0"> </span><span class="hl-5">&quot;_&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-3">secondVariable:</span><span class="hl-0"> </span><span class="hl-5">&quot;a&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">});</span>
 </code></pre>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> base: <a href="MiniCSS.html" class="tsd-signature-type" data-tsd-kind="Class">MiniCSS</a></h5></li></ul></div>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> base: <a href="../interfaces/MiniCSSJSONOutputI.html" class="tsd-signature-type" data-tsd-kind="Interface">MiniCSSJSONOutputI</a><span class="tsd-signature-symbol"> | </span><a href="MiniCSS.html" class="tsd-signature-type" data-tsd-kind="Class">MiniCSS</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="MiniCSS.html" class="tsd-signature-type" data-tsd-kind="Class">MiniCSS</a></h4></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
@@ -68,28 +75,28 @@
 <div class="tsd-comment tsd-typography"><p>CSS class map.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/minicss/core/blob/a63b876/src/MiniCSS.ts#L12">src/MiniCSS.ts:12</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/minicss/core/blob/c5cc1a3/src/MiniCSS.ts#L13">src/MiniCSS.ts:13</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="_ids" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>#ids</span><a href="#_ids" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">#ids<span class="tsd-signature-symbol">:</span> <a href="Node.html" class="tsd-signature-type" data-tsd-kind="Class">Node</a><span class="tsd-signature-symbol"> = ...</span></div>
 <div class="tsd-comment tsd-typography"><p>CSS id map.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/minicss/core/blob/a63b876/src/MiniCSS.ts#L18">src/MiniCSS.ts:18</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/minicss/core/blob/c5cc1a3/src/MiniCSS.ts#L19">src/MiniCSS.ts:19</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="_keyframes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>#keyframes</span><a href="#_keyframes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">#keyframes<span class="tsd-signature-symbol">:</span> <a href="Node.html" class="tsd-signature-type" data-tsd-kind="Class">Node</a><span class="tsd-signature-symbol"> = ...</span></div>
 <div class="tsd-comment tsd-typography"><p>CSS keyframes map.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/minicss/core/blob/a63b876/src/MiniCSS.ts#L24">src/MiniCSS.ts:24</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/minicss/core/blob/c5cc1a3/src/MiniCSS.ts#L25">src/MiniCSS.ts:25</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="_variables" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>#variables</span><a href="#_variables" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">#variables<span class="tsd-signature-symbol">:</span> <a href="Node.html" class="tsd-signature-type" data-tsd-kind="Class">Node</a><span class="tsd-signature-symbol"> = ...</span></div>
 <div class="tsd-comment tsd-typography"><p>CSS variable map.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/minicss/core/blob/a63b876/src/MiniCSS.ts#L30">src/MiniCSS.ts:30</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/minicss/core/blob/c5cc1a3/src/MiniCSS.ts#L31">src/MiniCSS.ts:31</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="class" class="tsd-anchor"></a>
@@ -154,7 +161,7 @@
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toJSON" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>toJSON</span><a href="#toJSON" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-<li class="tsd-signature tsd-anchor-link" id="toJSON.toJSON-1">toJSON<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">&quot;classes&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;ids&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;keyframes&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;variables&quot;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#toJSON.toJSON-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="toJSON.toJSON-1">toJSON<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/MiniCSSJSONOutputI.html" class="tsd-signature-type" data-tsd-kind="Interface">MiniCSSJSONOutputI</a><a href="#toJSON.toJSON-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Converts the current miniCSS instance to a JSON compatible object.</p>
 
@@ -164,7 +171,7 @@
 <h3>Example</h3><pre><code class="language-ts"><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">obj</span><span class="hl-0"> = </span><span class="hl-6">JSON</span><span class="hl-0">.</span><span class="hl-4">stringify</span><span class="hl-0">(</span><span class="hl-3">miniCSS</span><span class="hl-0">);</span>
 </code></pre>
 </div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">&quot;classes&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;ids&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;keyframes&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;variables&quot;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></section>
+<h4 class="tsd-returns-title">Returns <a href="../interfaces/MiniCSSJSONOutputI.html" class="tsd-signature-type" data-tsd-kind="Interface">MiniCSSJSONOutputI</a></h4></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="variable" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>variable</span><a href="#variable" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -180,7 +187,23 @@
 <ul class="tsd-parameter-list">
 <li>
 <h5>name: <span class="tsd-signature-type">string</span></h5></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4></li></ul></section></section></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fromJSON" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>fromJSON</span><a href="#fromJSON" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="fromJSON.fromJSON-1">fromJSON<span class="tsd-signature-symbol">(</span>map<span class="tsd-signature-symbol">: </span><a href="../interfaces/MiniCSSJSONOutputI.html" class="tsd-signature-type" data-tsd-kind="Interface">MiniCSSJSONOutputI</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="MiniCSS.html" class="tsd-signature-type" data-tsd-kind="Class">MiniCSS</a><a href="#fromJSON.fromJSON-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Creates a new MiniCSS instance from the JSON output.</p>
+
+<h3>Example</h3><pre><code class="language-ts"><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">miniCSS</span><span class="hl-0"> = </span><span class="hl-3">MiniCSS</span><span class="hl-0">.</span><span class="hl-4">fromJSON</span><span class="hl-0">(</span><span class="hl-3">obj</span><span class="hl-0">);</span>
+</code></pre>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>map: <a href="../interfaces/MiniCSSJSONOutputI.html" class="tsd-signature-type" data-tsd-kind="Interface">MiniCSSJSONOutputI</a></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="MiniCSS.html" class="tsd-signature-type" data-tsd-kind="Class">MiniCSS</a></h4></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -216,7 +239,8 @@
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="MiniCSS.html#id" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>id</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="MiniCSS.html#keyframe" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>keyframe</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="MiniCSS.html#toJSON" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>toJSON</a></li>
-<li class="tsd-kind-method tsd-parent-kind-class"><a href="MiniCSS.html#variable" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>variable</a></li></ul></li></ul></nav></div></div>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="MiniCSS.html#variable" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>variable</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="MiniCSS.html#fromJSON" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>fromJSON</a></li></ul></li></ul></nav></div></div>
 <div class="container tsd-generator">
 <p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
 <div class="overlay"></div><script src="../assets/main.js"></script></body></html>

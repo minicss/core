@@ -25,9 +25,26 @@ export default class Node extends Map<string, string> {
       super(node.entries());
 
       this.#last = node.#last;
-    } else {
-      super(node);
+
+      return;
     }
+
+    super(node);
+  }
+
+  /**
+   * Creates a new node instance from the JSON output.
+   * @example
+   * const node = Node.fromJSON(obj);
+   */
+  public static fromJSON(map: Record<string, string>): Node {
+    const node = new Node(Object.entries(map));
+
+    const size = node.size;
+
+    if (size > 0) node.#last = Object.values(map)[size - 1];
+
+    return node;
   }
 
   /**

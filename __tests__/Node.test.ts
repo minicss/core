@@ -41,3 +41,16 @@ it("should clone the instance", () => {
 
   expect(node.toJSON()).toEqual({ firstName: "_" });
 });
+
+it("should create a new instance from JSON output", () => {
+  const node = Node.fromJSON({ firstName: "_" });
+
+  expect(node.toJSON()).toEqual({ firstName: "_" });
+
+  expect(node.name("secondName")).toBe("a");
+
+  expect(node.toJSON()).toEqual({
+    firstName : "_",
+    secondName: "a",
+  });
+});

@@ -164,3 +164,74 @@ it("should clone the instance", () => {
     variables: {},
   });
 });
+
+it("should create a new instance from JSON output", () => {
+  const miniCSS = MiniCSS.fromJSON({
+    classes: {
+      firstClass : "_",
+      secondClass: "a",
+    },
+    ids: {
+      firstId : "_",
+      secondId: "a",
+    },
+    keyframes: {
+      firstKeyframe : "_",
+      secondKeyframe: "a",
+    },
+    variables: {
+      firstVariable : "_",
+      secondVariable: "a",
+    },
+  });
+
+  expect(miniCSS.toJSON()).toEqual({
+    classes: {
+      firstClass : "_",
+      secondClass: "a",
+    },
+    ids: {
+      firstId : "_",
+      secondId: "a",
+    },
+    keyframes: {
+      firstKeyframe : "_",
+      secondKeyframe: "a",
+    },
+    variables: {
+      firstVariable : "_",
+      secondVariable: "a",
+    },
+  });
+
+  expect(miniCSS.class("thirdClass")).toBe("b");
+
+  expect(miniCSS.id("thirdId")).toBe("b");
+
+  expect(miniCSS.keyframe("thirdKeyframe")).toBe("b");
+
+  expect(miniCSS.variable("thirdVariable")).toBe("b");
+
+  expect(miniCSS.toJSON()).toEqual({
+    classes: {
+      firstClass : "_",
+      secondClass: "a",
+      thirdClass : "b",
+    },
+    ids: {
+      firstId : "_",
+      secondId: "a",
+      thirdId : "b",
+    },
+    keyframes: {
+      firstKeyframe : "_",
+      secondKeyframe: "a",
+      thirdKeyframe : "b",
+    },
+    variables: {
+      firstVariable : "_",
+      secondVariable: "a",
+      thirdVariable : "b",
+    },
+  });
+});
