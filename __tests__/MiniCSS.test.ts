@@ -7,6 +7,7 @@ it("should create a new instance", () => {
   expect(miniCSS.toJSON()).toEqual({
     classes  : {},
     ids      : {},
+    keyframes: {},
     variables: {},
   });
 });
@@ -25,6 +26,7 @@ it("should add new mapped classes", () => {
       secondClass: "a",
     },
     ids      : {},
+    keyframes: {},
     variables: {},
   });
 });
@@ -43,6 +45,26 @@ it("should add new mapped ids", () => {
       firstId : "_",
       secondId: "a",
     },
+    keyframes: {},
+    variables: {},
+  });
+});
+
+it("should add new mapped keyframes", () => {
+  const miniCSS = (new MiniCSS);
+
+  expect(miniCSS.keyframe("firstKeyframe")).toBe("_");
+  expect(miniCSS.keyframe("secondKeyframe")).toBe("a");
+
+  expect(miniCSS.keyframe("firstKeyframe")).toBe("_");
+
+  expect(miniCSS.toJSON()).toEqual({
+    classes  : {},
+    ids      : {},
+    keyframes: {
+      firstKeyframe : "_",
+      secondKeyframe: "a",
+    },
     variables: {},
   });
 });
@@ -58,6 +80,7 @@ it("should add new mapped variables", () => {
   expect(miniCSS.toJSON()).toEqual({
     classes  : {},
     ids      : {},
+    keyframes: {},
     variables: {
       firstVariable : "_",
       secondVariable: "a",
@@ -74,6 +97,9 @@ it("should add new mapped names", () => {
   expect(miniCSS.id("firstId")).toBe("_");
   expect(miniCSS.id("secondId")).toBe("a");
 
+  expect(miniCSS.keyframe("firstKeyframe")).toBe("_");
+  expect(miniCSS.keyframe("secondKeyframe")).toBe("a");
+
   expect(miniCSS.variable("firstVariable")).toBe("_");
   expect(miniCSS.variable("secondVariable")).toBe("a");
 
@@ -85,6 +111,10 @@ it("should add new mapped names", () => {
     ids: {
       firstId : "_",
       secondId: "a",
+    },
+    keyframes: {
+      firstKeyframe : "_",
+      secondKeyframe: "a",
     },
     variables: {
       firstVariable : "_",
@@ -101,6 +131,7 @@ it("should clone the instance", () => {
   expect(miniCSS.toJSON()).toEqual({
     classes  : { firstClass: "_" },
     ids      : {},
+    keyframes: {},
     variables: {},
   });
 
@@ -110,6 +141,7 @@ it("should clone the instance", () => {
   expect(clone.toJSON()).toEqual({
     classes  : { firstClass: "_" },
     ids      : {},
+    keyframes: {},
     variables: {},
   });
 
@@ -121,12 +153,14 @@ it("should clone the instance", () => {
       secondClass: "a",
     },
     ids      : {},
+    keyframes: {},
     variables: {},
   });
 
   expect(miniCSS.toJSON()).toEqual({
     classes  : { firstClass: "_" },
     ids      : {},
+    keyframes: {},
     variables: {},
   });
 });
