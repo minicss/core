@@ -10,6 +10,25 @@ export const LAST_CHAR = DICTIONARY[DICTIONARY_LENGTH - 1];
 
 export const LAST_CHAR_REGEX = new RegExp(`${ LAST_CHAR }+$`);
 
+export enum ATTRIBUTE {
+  CLASS = "class",
+  ID = "id",
+}
+
+export enum OPERATOR {
+  EXACT = "=",
+  EXACT_SPACE_SEPARATED_WORD = "~=",
+  EXACT_OR_BEGINS_FOLLOWED_BY_HYPHEN = "|=",
+  STARTS_WITH = "^=",
+  ENDS_WITH = "$=",
+  CONTAINS = "*=",
+}
+
+export enum CASE_SENSITIVITY {
+  INSENSITIVE = "i",
+  SENSITIVE = "s",
+}
+
 export interface MiniCSSJSONOutputI {
   classes: Record<string, string>;
   ids: Record<string, string>;
