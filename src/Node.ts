@@ -257,11 +257,11 @@ export default class Node extends Map<string, string> {
       if (this.has(name)) continue;
 
       const replacement = `${
-        startSelectors.find(selector => selector.value === name)?.replacement ?? ""
+        startSelectors.find(selector => selector.value.startsWith(name))?.replacement ?? ""
       }${
-        containSelectors.find(selector => selector.value === name)?.replacement ?? ""
+        containSelectors.find(selector => selector.value.includes(name))?.replacement ?? ""
       }${
-        endSelectors.find(selector => selector.value === name)?.replacement ?? ""
+        endSelectors.find(selector => selector.value.endsWith(name))?.replacement ?? ""
       }`.replaceAll(/-{2,}/g, "-");
 
       if (replacement === "") continue;
@@ -283,9 +283,9 @@ export default class Node extends Map<string, string> {
       this.set(
         name,
         `${
-          this.#startSelectors.find(selector => name.endsWith(selector.value))?.replacement ?? ""
+          this.#startSelectors.find(selector => name.startsWith(selector.value))?.replacement ?? ""
         }${
-          this.#containSelectors.find(selector => name.endsWith(selector.value))?.replacement ?? ""
+          this.#containSelectors.find(selector => name.includes(selector.value))?.replacement ?? ""
         }${
           this.#generate()
         }${
