@@ -1,14 +1,4 @@
-const DICTIONARY = "0123456789_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" as const;
-
-const DICTIONARY_LENGTH = DICTIONARY.length;
-
-const FIRST_SINGLE_CHAR = "_" as const;
-
-const FIRST_CHAR = DICTIONARY[0];
-
-const LAST_CHAR = DICTIONARY[DICTIONARY_LENGTH - 1];
-
-const LAST_CHAR_REGEX = new RegExp(`${ LAST_CHAR }+$`);
+import { DICTIONARY, FIRST_CHAR, FIRST_SINGLE_CHAR, LAST_CHAR_REGEX } from "./constants.js";
 
 /**
  * Generates a new string based on the last provided one.
@@ -34,11 +24,4 @@ export function generate(last: string | null): string {
   }${
     FIRST_CHAR.repeat(match[0].length)
   }`;
-}
-
-export interface MiniCSSJSONOutputI {
-  classes: Record<string, string>;
-  ids: Record<string, string>;
-  keyframes: Record<string, string>;
-  variables: Record<string, string>;
 }
