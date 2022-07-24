@@ -1,7 +1,12 @@
 import { generate } from "../src/utils.js";
 
 it("should generate the first name", () => {
-  expect(generate(null)).toBe("_");
+  expect(generate()).toBe("_");
+
+  // eslint-disable-next-line no-undefined
+  expect(generate(undefined)).toBe("_");
+
+  expect(generate("")).toBe("_");
 });
 
 it("should generate the first 2 character name", () => {

@@ -1,3 +1,4 @@
+import { NodeAttributeSelectorI, OPERATOR, ProcessedAttributeSelectorI } from "./constants.js";
 import { generate } from "./utils.js";
 
 /**
@@ -6,10 +7,28 @@ import { generate } from "./utils.js";
 export default class Node extends Map<string, string> {
 
   /**
+   * Attribute selectors for names containing the value.
+   * @private
+   */
+  #containSelectors: ProcessedAttributeSelectorI[] = [];
+
+  /**
+   * Attribute selectors for names ending with the value.
+   * @private
+   */
+  #endSelectors: ProcessedAttributeSelectorI[] = [];
+
+  /**
    * Last generated name.
    * @private
    */
-  #last: string | null = null;
+  #last = "";
+
+  /**
+   * Attribute selectors for names starting with the value.
+   * @private
+   */
+  #startSelectors: ProcessedAttributeSelectorI[] = [];
 
   /**
    * New Node instance.
@@ -48,6 +67,160 @@ export default class Node extends Map<string, string> {
   }
 
   /**
+   * Add an attribute selector to be applied to the renaming process after this call.
+   * @param selector
+   * @example
+   * node = node.addAttributeSelector({
+   *   operator: OPERATOR.EXACT_OR_BEGINS_FOLLOWED_BY_HYPHEN,
+   *   value   : "col",
+   * });
+   */
+  public addAttributeSelector(selector: NodeAttributeSelectorI): this {
+    const { operator, value } = selector;
+
+    if (operator === OPERATOR.EXACT || operator === OPERATOR.EXACT_SPACE_SEPARATED_WORD) return this;
+
+    const last = this.#last;
+
+    const generated = this.#generate();
+
+    let replacement = generated;
+
+    let selectors: ProcessedAttributeSelectorI[];
+
+    switch (operator) {
+      case OPERATOR.EXACT_OR_BEGINS_FOLLOWED_BY_HYPHEN:
+        return this.addAttributeSelector({
+          operator: OPERATOR.STARTS_WITH,
+          value   : `${ value }-`,
+        });
+      case OPERATOR.STARTS_WITH:
+        selectors = this.#startSelectors;
+
+        replacement += "-";
+
+        [...selectors].reverse().forEach((existing) => {
+          if (value.startsWith(existing.value)) replacement = `${ existing.replacement }${ replacement }`;
+        });
+
+        selectors.forEach((existing) => {
+          if (existing.value.startsWith(value)) existing.replacement = `${ replacement }${ existing.replacement }`;
+        });
+
+        break;
+      case OPERATOR.CONTAINS:
+        selectors = this.#containSelectors;
+
+        [...selectors].reverse().forEach((existing) => {
+          if (value.includes(existing.value)) replacement += `${ existing.replacement }-`;
+        });
+
+        selectors.forEach((existing) => {
+          if (existing.value.includes(value)) existing.replacement += `${ replacement }-`;
+        });
+
+        replacement = `-${ replacement }-`;
+
+        break;
+      case OPERATOR.ENDS_WITH:
+        selectors = this.#endSelectors;
+
+        replacement = `-${ replacement }`;
+
+        [...selectors].reverse().forEach((existing) => {
+          if (value.endsWith(existing.value)) replacement = `${ replacement }${ existing.replacement }`;
+        });
+
+        selectors.forEach((existing) => {
+          if (existing.value.endsWith(value)) existing.replacement = `${ existing.replacement }${ replacement }`;
+        });
+
+        break;
+      default:
+        throw new Error(`Attribute selector operator "${ operator }" is not supported.`);
+    }
+
+    if (selectors.some(existing => existing.value === value)) {
+      this.#last = last;
+
+      return this;
+    }
+
+    selectors.push({
+      value,
+      generated,
+      replacement,
+    });
+
+    selectors.sort((a, b) => b.value.length - a.value.length);
+
+    return this;
+  }
+
+  /**
+   * Maps the given attribute to an already generated one or generate a new one.
+   * @param selector
+   * @example
+   * const { operator, value } = node.attributeSelector({
+   *   operator: OPERATOR.EXACT_OR_BEGINS_FOLLOWED_BY_HYPHEN,
+   *   value   : "col",
+   * });
+   */
+  public attributeSelector(selector: NodeAttributeSelectorI): NodeAttributeSelectorI {
+    this.addAttributeSelector(selector);
+
+    const { operator, value } = selector;
+
+    const result = {
+      operator,
+      value,
+    };
+
+    let selectors: ProcessedAttributeSelectorI[];
+
+    switch (operator) {
+      case OPERATOR.EXACT:
+        result.value = this.rename(value);
+
+        return result;
+      case OPERATOR.EXACT_SPACE_SEPARATED_WORD:
+        result.value = value.replaceAll(/[^ ]+/g, match => this.rename(match));
+
+        return result;
+      case OPERATOR.EXACT_OR_BEGINS_FOLLOWED_BY_HYPHEN:
+        result.operator = OPERATOR.STARTS_WITH;
+
+        result.value += "-";
+
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        result.value = this.#startSelectors.find(existingStart => existingStart.value === result.value)!.replacement;
+
+        this.set(value, result.value);
+
+        return result;
+      case OPERATOR.STARTS_WITH:
+        selectors = this.#startSelectors;
+
+        break;
+      case OPERATOR.CONTAINS:
+        selectors = this.#containSelectors;
+
+        break;
+      case OPERATOR.ENDS_WITH:
+        selectors = this.#endSelectors;
+
+        break;
+      default:
+        throw new Error(`Attribute selector operator "${ operator }" is not supported.`);
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    result.value = selectors.find(existingStart => existingStart.value === value)!.replacement;
+
+    return result;
+  }
+
+  /**
    * Creates a clone of the current node instance.
    * @example
    * const clone = node.clone();
@@ -57,13 +230,69 @@ export default class Node extends Map<string, string> {
   }
 
   /**
+   * Generates a new string based on the last one in the current node instance.
+   * @private
+   */
+  #generate(): string {
+    return (this.#last = generate(this.#last));
+  }
+
+  /**
+   * Optimize attribute selectors and name maps.
+   * @example
+   * node = node.optimize();
+   */
+  public optimize(): this {
+    const startSelectors = this.#startSelectors;
+    const containSelectors = this.#containSelectors;
+    const endSelectors = this.#endSelectors;
+
+    const names = new Set([
+      ...startSelectors,
+      ...containSelectors,
+      ...endSelectors,
+    ].map(selector => selector.value));
+
+    for (const name of names) {
+      if (this.has(name)) continue;
+
+      const replacement = `${
+        startSelectors.find(selector => selector.value === name)?.replacement ?? ""
+      }${
+        containSelectors.find(selector => selector.value === name)?.replacement ?? ""
+      }${
+        endSelectors.find(selector => selector.value === name)?.replacement ?? ""
+      }`.replaceAll(/-{2,}/g, "-");
+
+      if (replacement === "") continue;
+
+      this.set(name, replacement);
+    }
+
+    return this;
+  }
+
+  /**
    * Maps the given name to an already generated one or generate a new one.
    * @param name
    * @example
    * const name = node.name("name");
    */
   public rename(name: string): string {
-    if (!this.has(name)) this.set(name, this.#last = generate(this.#last));
+    if (!this.has(name)) {
+      this.set(
+        name,
+        `${
+          this.#startSelectors.find(selector => name.endsWith(selector.value))?.replacement ?? ""
+        }${
+          this.#containSelectors.find(selector => name.endsWith(selector.value))?.replacement ?? ""
+        }${
+          this.#generate()
+        }${
+          this.#endSelectors.find(selector => name.endsWith(selector.value))?.replacement ?? ""
+        }`.replaceAll(/-{2,}/g, "-"),
+      );
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return this.get(name)!;

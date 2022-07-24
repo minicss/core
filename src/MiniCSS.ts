@@ -1,5 +1,11 @@
 import Node from "./Node.js";
-import { MiniCSSJSONOutputI } from "./constants.js";
+import {
+  ATTRIBUTE,
+  AttributeSelectorI,
+  CASE_SENSITIVITY,
+  MiniCSSJSONOutputI,
+  NodeAttributeSelectorI,
+} from "./constants.js";
 
 /**
  *
@@ -85,6 +91,86 @@ export default class MiniCSS {
   }
 
   /**
+   * Add a new attribute selection condition to be applied to classes/ids being renamed from this point on.
+   * @param selector
+   * @example
+   * miniCSS = miniCSS.addAttributeSelector({
+   *   attribute      : ATTRIBUTE.CLASS,
+   *   operator       : OPERATOR.EXACT_OR_BEGIN_WITH_HYPHEN,
+   *   value          : "col",
+   *   caseSensitivity: CASE_SENSITIVITY.SENSITIVE,
+   * });
+   */
+  public addAttributeSelector(selector: AttributeSelectorI): this {
+    const { attribute, operator, value, caseSensitivity = CASE_SENSITIVITY.SENSITIVE } = selector;
+
+    if (
+      caseSensitivity.toLowerCase() === CASE_SENSITIVITY.INSENSITIVE
+    ) throw new Error("Case-insensitive attribute selectors are not supported.");
+
+    let node: Node;
+
+    switch (attribute) {
+      case ATTRIBUTE.CLASS:
+        node = this.#classes;
+
+        break;
+      case ATTRIBUTE.ID:
+        node = this.#ids;
+
+        break;
+      default:
+        throw new Error(`Attribute selector "${ attribute }" is not supported.`);
+    }
+
+    node.addAttributeSelector({
+      operator,
+      value,
+    });
+
+    return this;
+  }
+
+  /**
+   * Maps the given attribute to an already generated one or generate a new one.
+   * @param selector
+   * @example
+   * const { operator, value } = node.attributeSelector({
+   *   attribute      : ATTRIBUTE.CLASS,
+   *   operator       : OPERATOR.EXACT_OR_BEGIN_WITH_HYPHEN,
+   *   value          : "col",
+   *   caseSensitivity: CASE_SENSITIVITY.SENSITIVE,
+   * });
+   */
+  public attributeSelector(selector: AttributeSelectorI): NodeAttributeSelectorI {
+    const { attribute, operator, value, caseSensitivity = CASE_SENSITIVITY.SENSITIVE } = selector;
+
+    if (
+      caseSensitivity.toLowerCase() === CASE_SENSITIVITY.INSENSITIVE
+    ) throw new Error("Case-insensitive attribute selectors are not supported.");
+
+    let node: Node;
+
+    switch (attribute) {
+      case ATTRIBUTE.CLASS:
+        node = this.#classes;
+
+        break;
+      case ATTRIBUTE.ID:
+        node = this.#ids;
+
+        break;
+      default:
+        throw new Error(`Attribute selector "${ attribute }" is not supported.`);
+    }
+
+    return node.attributeSelector({
+      operator,
+      value,
+    });
+  }
+
+  /**
    * Maps the given CSS class to an already generated one or generate a new one.
    * @param name
    * @example
@@ -121,6 +207,18 @@ export default class MiniCSS {
    */
   public keyframe(name: string): string {
     return this.#keyframes.rename(name);
+  }
+
+  /**
+   * Optimize attribute selectors and name maps.
+   * @example
+   * miniCSS = miniCSS.optimize();
+   */
+  public optimize(): this {
+    this.#classes.optimize();
+    this.#ids.optimize();
+
+    return this;
   }
 
   /**

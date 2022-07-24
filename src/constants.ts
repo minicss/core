@@ -35,3 +35,19 @@ export interface MiniCSSJSONOutputI {
   keyframes: Record<string, string>;
   variables: Record<string, string>;
 }
+
+export interface NodeAttributeSelectorI {
+  operator: OPERATOR;
+  value: string;
+}
+
+export interface AttributeSelectorI extends NodeAttributeSelectorI {
+  attribute: ATTRIBUTE;
+  caseSensitivity?: CASE_SENSITIVITY;
+}
+
+export interface ProcessedAttributeSelectorI {
+  generated: string;
+  replacement: string;
+  value: string;
+}
