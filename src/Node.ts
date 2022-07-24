@@ -62,7 +62,7 @@ export default class Node extends Map<string, string> {
    * @example
    * const name = node.name("name");
    */
-  public name(name: string): string {
+  public rename(name: string): string {
     if (!this.has(name)) this.set(name, this.#last = generate(this.#last));
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

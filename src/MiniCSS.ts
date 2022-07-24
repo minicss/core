@@ -91,7 +91,7 @@ export default class MiniCSS {
    * const name = miniCSS.class("class");
    */
   public class(name: string): string {
-    return this.#classes.name(name);
+    return this.#classes.rename(name);
   }
 
   /**
@@ -110,7 +110,7 @@ export default class MiniCSS {
    * const name = miniCSS.id("id");
    */
   public id(name: string): string {
-    return this.#ids.name(name);
+    return this.#ids.rename(name);
   }
 
   /**
@@ -120,7 +120,7 @@ export default class MiniCSS {
    * const name = miniCSS.keyframe("keyframe");
    */
   public keyframe(name: string): string {
-    return this.#keyframes.name(name);
+    return this.#keyframes.rename(name);
   }
 
   /**
@@ -146,7 +146,7 @@ export default class MiniCSS {
    * const name = miniCSS.variable("variable");
    */
   public variable(name: string): string {
-    return this.#variables.name(name);
+    return this.#variables.rename(name);
   }
 
 }

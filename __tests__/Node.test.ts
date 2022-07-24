@@ -11,8 +11,8 @@ it("should create a new instance", () => {
 it("should add new mapped names", () => {
   const node = (new Node);
 
-  expect(node.name("firstName")).toBe("_");
-  expect(node.name("secondName")).toBe("a");
+  expect(node.rename("firstName")).toBe("_");
+  expect(node.rename("secondName")).toBe("a");
 
   expect(node.toJSON()).toEqual({
     firstName : "_",
@@ -23,7 +23,7 @@ it("should add new mapped names", () => {
 it("should clone the instance", () => {
   const node = (new Node);
 
-  expect(node.name("firstName")).toBe("_");
+  expect(node.rename("firstName")).toBe("_");
 
   expect(node.toJSON()).toEqual({ firstName: "_" });
 
@@ -32,7 +32,7 @@ it("should clone the instance", () => {
   expect(clone).toBeInstanceOf(Node);
   expect(clone.toJSON()).toEqual({ firstName: "_" });
 
-  expect(clone.name("secondName")).toBe("a");
+  expect(clone.rename("secondName")).toBe("a");
 
   expect(clone.toJSON()).toEqual({
     firstName : "_",
@@ -47,7 +47,7 @@ it("should create a new instance from JSON output", () => {
 
   expect(node.toJSON()).toEqual({ firstName: "_" });
 
-  expect(node.name("secondName")).toBe("a");
+  expect(node.rename("secondName")).toBe("a");
 
   expect(node.toJSON()).toEqual({
     firstName : "_",
