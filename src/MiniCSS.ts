@@ -1,5 +1,5 @@
 import Node from "./Node.js";
-import { MiniCSSJSONOutputI } from "./utils.js";
+import { MiniCSSJSONOutputI } from "./constants.js";
 
 /**
  *
