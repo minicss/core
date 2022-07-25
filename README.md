@@ -33,6 +33,27 @@ npm i @minicss/core
 
 ## Usage
 
+```typescript
+import MiniCSS from "@minicss/core";
+
+const miniCSS = new MiniCSS();
+
+// First, you need to add attribute selectors.
+miniCSS.addAttributeSelector(selector);
+
+// Then, you can optimize nodes based on attribute selectors. (optional)
+miniCSS.optimize();
+
+// Then, you can replace the attribute selector operators & values.
+const { operator, value } = miniCSS.attributeSelector(selector);
+
+// Finally, you can rename classes/ids/variables/keyframes
+const className = miniCSS.class("class");
+const id = miniCSS.id("id");
+const variable = miniCSS.variable("variable");
+const keyframe = miniCSS.keyframe("keyframe");
+```
+
 > API usage documents are available [here](https://minicss.github.io/core).
 
 ## Versioning
