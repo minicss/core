@@ -16,25 +16,25 @@ export default class MiniCSS {
    * CSS class map.
    * @private
    */
-  #classes = new Node;
+  readonly #classes = new Node;
 
   /**
    * CSS id map.
    * @private
    */
-  #ids = new Node;
+  readonly #ids = new Node;
 
   /**
    * CSS keyframes map.
    * @private
    */
-  #keyframes = new Node;
+  readonly #keyframes = new Node;
 
   /**
    * CSS variable map.
    * @private
    */
-  #variables = new Node;
+  readonly #variables = new Node;
 
   /**
    * New MiniCSS instance.

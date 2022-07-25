@@ -1,4 +1,4 @@
-import { NodeAttributeSelectorI, OPERATOR, ProcessedAttributeSelectorI } from "./constants.js";
+import { NodeAttributeSelectorI, NodeJSONOutputI, OPERATOR, ProcessedAttributeSelectorI } from "./constants.js";
 import { generate } from "./utils.js";
 
 /**
@@ -56,12 +56,14 @@ export default class Node extends Map<string, string> {
    * @example
    * const node = Node.fromJSON(obj);
    */
-  public static fromJSON(map: Record<string, string>): Node {
-    const node = new Node(Object.entries(map));
+  public static fromJSON(json: NodeJSONOutputI): Node {
+    const node = new Node(Object.entries(json.map));
 
-    const size = node.size;
+    node.#last = json.last;
 
-    if (size > 0) node.#last = Object.values(map)[size - 1];
+    node.#startSelectors = json.selectors.start;
+    node.#containSelectors = json.selectors.contain;
+    node.#endSelectors = json.selectors.end;
 
     return node;
   }
@@ -90,12 +92,20 @@ export default class Node extends Map<string, string> {
 
     switch (operator) {
       case OPERATOR.EXACT_OR_BEGINS_FOLLOWED_BY_HYPHEN:
+        this.#last = last;
+
         return this.addAttributeSelector({
           operator: OPERATOR.STARTS_WITH,
           value   : `${ value }-`,
         });
       case OPERATOR.STARTS_WITH:
         selectors = this.#startSelectors;
+
+        if (selectors.some(existing => existing.value === value)) {
+          this.#last = last;
+
+          return this;
+        }
 
         replacement += "-";
 
@@ -111,6 +121,12 @@ export default class Node extends Map<string, string> {
       case OPERATOR.CONTAINS:
         selectors = this.#containSelectors;
 
+        if (selectors.some(existing => existing.value === value)) {
+          this.#last = last;
+
+          return this;
+        }
+
         [...selectors].reverse().forEach((existing) => {
           if (value.includes(existing.value)) replacement += `${ existing.replacement }-`;
         });
@@ -119,11 +135,17 @@ export default class Node extends Map<string, string> {
           if (existing.value.includes(value)) existing.replacement += `${ replacement }-`;
         });
 
-        replacement = `-${ replacement }-`;
+        replacement = `-${ replacement }-`.replaceAll(/-{2,}/g, "-");
 
         break;
       case OPERATOR.ENDS_WITH:
         selectors = this.#endSelectors;
+
+        if (selectors.some(existing => existing.value === value)) {
+          this.#last = last;
+
+          return this;
+        }
 
         replacement = `-${ replacement }`;
 
@@ -137,13 +159,9 @@ export default class Node extends Map<string, string> {
 
         break;
       default:
+        this.#last = last;
+
         throw new Error(`Attribute selector operator "${ operator }" is not supported.`);
-    }
-
-    if (selectors.some(existing => existing.value === value)) {
-      this.#last = last;
-
-      return this;
     }
 
     selectors.push({
@@ -178,6 +196,7 @@ export default class Node extends Map<string, string> {
 
     let selectors: ProcessedAttributeSelectorI[];
 
+    // eslint-disable-next-line default-case
     switch (operator) {
       case OPERATOR.EXACT:
         result.value = this.rename(value);
@@ -195,7 +214,7 @@ export default class Node extends Map<string, string> {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         result.value = this.#startSelectors.find(existingStart => existingStart.value === result.value)!.replacement;
 
-        this.set(value, result.value);
+        if (!this.has(value)) this.set(value, `${ result.value }${ this.#generate() }`);
 
         return result;
       case OPERATOR.STARTS_WITH:
@@ -210,12 +229,10 @@ export default class Node extends Map<string, string> {
         selectors = this.#endSelectors;
 
         break;
-      default:
-        throw new Error(`Attribute selector operator "${ operator }" is not supported.`);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    result.value = selectors.find(existingStart => existingStart.value === value)!.replacement;
+    result.value = selectors.find(existingStart => existingStart.value === result.value)!.replacement;
 
     return result;
   }
@@ -247,24 +264,30 @@ export default class Node extends Map<string, string> {
     const containSelectors = this.#containSelectors;
     const endSelectors = this.#endSelectors;
 
+    const startNames = startSelectors.map(selector => selector.value);
+    const containNames = containSelectors.map(selector => selector.value);
+    const endNames = endSelectors.map(selector => selector.value);
+
+    // TODO: Combination names.
     const names = new Set([
-      ...startSelectors,
-      ...containSelectors,
-      ...endSelectors,
-    ].map(selector => selector.value));
+      ...startNames,
+      ...containNames,
+      ...endNames,
+    ]);
 
     for (const name of names) {
       if (this.has(name)) continue;
 
       const replacement = `${
-        startSelectors.find(selector => selector.value.startsWith(name))?.replacement ?? ""
+        startSelectors.find(selector => name.startsWith(selector.value))?.replacement ?? ""
       }${
-        containSelectors.find(selector => selector.value.includes(name))?.replacement ?? ""
+        containSelectors.find(selector => name.includes(selector.value))?.replacement ?? ""
       }${
-        endSelectors.find(selector => selector.value.endsWith(name))?.replacement ?? ""
+        endSelectors.find(selector => name.endsWith(selector.value))?.replacement ?? ""
       }`.replaceAll(/-{2,}/g, "-");
 
-      if (replacement === "") continue;
+      /* istanbul ignore next */
+      if (replacement === "") throw new Error("Something unexpected happened, please report this bug.");
 
       this.set(name, replacement);
     }
@@ -280,6 +303,24 @@ export default class Node extends Map<string, string> {
    */
   public rename(name: string): string {
     if (!this.has(name)) {
+      /*
+       * Let replacement = this.#generate();
+       *
+       * this.#containSelectors.forEach((selector) => {
+       *   if (name.includes(selector.value)) replacement += selector.generated;
+       * });
+       *
+       * this.#startSelectors.forEach((selector) => {
+       *   if (name.startsWith(selector.value)) replacement = `${ selector.generated }${ replacement }`;
+       * });
+       *
+       * this.#endSelectors.forEach((selector) => {
+       *   if (name.endsWith(selector.value)) replacement += selector.generated;
+       * });
+       *
+       * this.set(name, replacement.replaceAll(/-{2,}/g, "-"));
+       */
+
       this.set(
         name,
         `${
@@ -305,8 +346,16 @@ export default class Node extends Map<string, string> {
    * @example
    * const obj = JSON.stringify(node);
    */
-  public toJSON(): Record<string, string> {
-    return Object.fromEntries(this.entries());
+  public toJSON(): NodeJSONOutputI {
+    return {
+      last     : this.#last,
+      map      : Object.fromEntries(this.entries()),
+      selectors: {
+        start  : this.#startSelectors,
+        contain: this.#containSelectors,
+        end    : this.#endSelectors,
+      },
+    };
   }
 
 }

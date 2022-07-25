@@ -30,10 +30,20 @@ export enum CASE_SENSITIVITY {
 }
 
 export interface MiniCSSJSONOutputI {
-  classes: Record<string, string>;
-  ids: Record<string, string>;
-  keyframes: Record<string, string>;
-  variables: Record<string, string>;
+  classes: NodeJSONOutputI;
+  ids: NodeJSONOutputI;
+  keyframes: NodeJSONOutputI;
+  variables: NodeJSONOutputI;
+}
+
+export interface NodeJSONOutputI {
+  last: string;
+  map: Record<string, string>;
+  selectors: {
+    contain: ProcessedAttributeSelectorI[];
+    end: ProcessedAttributeSelectorI[];
+    start: ProcessedAttributeSelectorI[];
+  };
 }
 
 export interface NodeAttributeSelectorI {
