@@ -268,12 +268,23 @@ export default class Node extends Map<string, string> {
     const containNames = containSelectors.map(selector => selector.value);
     const endNames = endSelectors.map(selector => selector.value);
 
-    // TODO: Combination names.
     const names = new Set([
       ...startNames,
       ...containNames,
       ...endNames,
     ]);
+
+    for (const start of startNames) for (const end of endNames) names.add(`${ start }${ end }`);
+
+    for (const middle of containNames) {
+      for (const start of startNames) {
+        names.add(`${ start }${ middle }`);
+
+        for (const end of endNames) names.add(`${ start }${ middle }${ end }`);
+      }
+
+      for (const end of endNames) names.add(`${ middle }${ end }`);
+    }
 
     for (const name of names) {
       if (this.has(name)) continue;
