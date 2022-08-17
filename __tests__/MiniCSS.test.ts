@@ -1,10 +1,16 @@
 import MiniCSS from "../src/MiniCSS.js";
-import { ATTRIBUTE, CASE_SENSITIVITY, OPERATOR } from "../src/index.js";
+import { ATTRIBUTE, CASE_SENSITIVITY, Node, OPERATOR } from "../src/index.js";
 
 it("should create a new instance", () => {
   const miniCSS = (new MiniCSS);
 
   expect(miniCSS).toBeInstanceOf(MiniCSS);
+
+  expect(miniCSS.classes()).toBeInstanceOf(Node);
+  expect(miniCSS.ids()).toBeInstanceOf(Node);
+  expect(miniCSS.keyframes()).toBeInstanceOf(Node);
+  expect(miniCSS.variables()).toBeInstanceOf(Node);
+
   expect(miniCSS.toJSON()).toEqual({
     classes: {
       last     : "",
@@ -48,10 +54,10 @@ it("should create a new instance", () => {
 it("should add new mapped classes", () => {
   const miniCSS = (new MiniCSS);
 
-  expect(miniCSS.class("firstClass")).toBe("_");
-  expect(miniCSS.class("secondClass")).toBe("a");
+  expect(miniCSS.classes().rename("firstClass")).toBe("_");
+  expect(miniCSS.classes().rename("secondClass")).toBe("a");
 
-  expect(miniCSS.class("firstClass")).toBe("_");
+  expect(miniCSS.classes().rename("firstClass")).toBe("_");
 
   expect(miniCSS.toJSON()).toEqual({
     classes: {
@@ -99,10 +105,10 @@ it("should add new mapped classes", () => {
 it("should add new mapped ids", () => {
   const miniCSS = (new MiniCSS);
 
-  expect(miniCSS.id("firstId")).toBe("_");
-  expect(miniCSS.id("secondId")).toBe("a");
+  expect(miniCSS.ids().rename("firstId")).toBe("_");
+  expect(miniCSS.ids().rename("secondId")).toBe("a");
 
-  expect(miniCSS.id("firstId")).toBe("_");
+  expect(miniCSS.ids().rename("firstId")).toBe("_");
 
   expect(miniCSS.toJSON()).toEqual({
     classes: {
@@ -150,10 +156,10 @@ it("should add new mapped ids", () => {
 it("should add new mapped keyframes", () => {
   const miniCSS = (new MiniCSS);
 
-  expect(miniCSS.keyframe("firstKeyframe")).toBe("_");
-  expect(miniCSS.keyframe("secondKeyframe")).toBe("a");
+  expect(miniCSS.keyframes().rename("firstKeyframe")).toBe("_");
+  expect(miniCSS.keyframes().rename("secondKeyframe")).toBe("a");
 
-  expect(miniCSS.keyframe("firstKeyframe")).toBe("_");
+  expect(miniCSS.keyframes().rename("firstKeyframe")).toBe("_");
 
   expect(miniCSS.toJSON()).toEqual({
     classes: {
@@ -201,10 +207,10 @@ it("should add new mapped keyframes", () => {
 it("should add new mapped variables", () => {
   const miniCSS = (new MiniCSS);
 
-  expect(miniCSS.variable("firstVariable")).toBe("_");
-  expect(miniCSS.variable("secondVariable")).toBe("a");
+  expect(miniCSS.variables().rename("firstVariable")).toBe("_");
+  expect(miniCSS.variables().rename("secondVariable")).toBe("a");
 
-  expect(miniCSS.variable("firstVariable")).toBe("_");
+  expect(miniCSS.variables().rename("firstVariable")).toBe("_");
 
   expect(miniCSS.toJSON()).toEqual({
     classes: {
@@ -252,17 +258,17 @@ it("should add new mapped variables", () => {
 it("should add new mapped names", () => {
   const miniCSS = (new MiniCSS);
 
-  expect(miniCSS.class("firstClass")).toBe("_");
-  expect(miniCSS.class("secondClass")).toBe("a");
+  expect(miniCSS.classes().rename("firstClass")).toBe("_");
+  expect(miniCSS.classes().rename("secondClass")).toBe("a");
 
-  expect(miniCSS.id("firstId")).toBe("_");
-  expect(miniCSS.id("secondId")).toBe("a");
+  expect(miniCSS.ids().rename("firstId")).toBe("_");
+  expect(miniCSS.ids().rename("secondId")).toBe("a");
 
-  expect(miniCSS.keyframe("firstKeyframe")).toBe("_");
-  expect(miniCSS.keyframe("secondKeyframe")).toBe("a");
+  expect(miniCSS.keyframes().rename("firstKeyframe")).toBe("_");
+  expect(miniCSS.keyframes().rename("secondKeyframe")).toBe("a");
 
-  expect(miniCSS.variable("firstVariable")).toBe("_");
-  expect(miniCSS.variable("secondVariable")).toBe("a");
+  expect(miniCSS.variables().rename("firstVariable")).toBe("_");
+  expect(miniCSS.variables().rename("secondVariable")).toBe("a");
 
   expect(miniCSS.toJSON()).toEqual({
     classes: {
@@ -319,7 +325,7 @@ it("should add new mapped names", () => {
 it("should clone the instance", () => {
   const miniCSS = (new MiniCSS);
 
-  expect(miniCSS.class("firstClass")).toBe("_");
+  expect(miniCSS.classes().rename("firstClass")).toBe("_");
 
   expect(miniCSS.toJSON()).toEqual({
     classes: {
@@ -402,7 +408,7 @@ it("should clone the instance", () => {
     },
   });
 
-  expect(clone.class("secondClass")).toBe("a");
+  expect(clone.classes().rename("secondClass")).toBe("a");
 
   expect(clone.toJSON()).toEqual({
     classes: {
@@ -589,13 +595,13 @@ it("should create a new instance from JSON output", () => {
     },
   });
 
-  expect(miniCSS.class("thirdClass")).toBe("b");
+  expect(miniCSS.classes().rename("thirdClass")).toBe("b");
 
-  expect(miniCSS.id("thirdId")).toBe("b");
+  expect(miniCSS.ids().rename("thirdId")).toBe("b");
 
-  expect(miniCSS.keyframe("thirdKeyframe")).toBe("b");
+  expect(miniCSS.keyframes().rename("thirdKeyframe")).toBe("b");
 
-  expect(miniCSS.variable("thirdVariable")).toBe("b");
+  expect(miniCSS.variables().rename("thirdVariable")).toBe("b");
 
   expect(miniCSS.toJSON()).toEqual({
     classes: {

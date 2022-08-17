@@ -251,7 +251,20 @@ export default class Node extends Map<string, string> {
    * @private
    */
   #generate(): string {
-    return (this.#last = generate(this.#last));
+    do this.#last = generate(this.#last);
+    while (this.has(this.#last));
+
+    return this.#last;
+  }
+
+  /**
+   * Maps the given name to an already generated one or return the given name parameter.
+   * @param name
+   * @example
+   * const name = node.get("name");
+   */
+  public get(name: string): string {
+    return super.get(name) ?? name;
   }
 
   /**
@@ -310,28 +323,10 @@ export default class Node extends Map<string, string> {
    * Maps the given name to an already generated one or generate a new one.
    * @param name
    * @example
-   * const name = node.name("name");
+   * const name = node.rename("name");
    */
   public rename(name: string): string {
     if (!this.has(name)) {
-      /*
-       * Let replacement = this.#generate();
-       *
-       * this.#containSelectors.forEach((selector) => {
-       *   if (name.includes(selector.value)) replacement += selector.generated;
-       * });
-       *
-       * this.#startSelectors.forEach((selector) => {
-       *   if (name.startsWith(selector.value)) replacement = `${ selector.generated }${ replacement }`;
-       * });
-       *
-       * this.#endSelectors.forEach((selector) => {
-       *   if (name.endsWith(selector.value)) replacement += selector.generated;
-       * });
-       *
-       * this.set(name, replacement.replaceAll(/-{2,}/g, "-"));
-       */
-
       this.set(
         name,
         `${
@@ -346,8 +341,7 @@ export default class Node extends Map<string, string> {
       );
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.get(name)!;
+    return this.get(name);
   }
 
   /**

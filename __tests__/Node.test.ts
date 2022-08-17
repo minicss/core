@@ -17,6 +17,25 @@ it("should create a new instance", () => {
   });
 });
 
+it("should return original name if not already set", () => {
+  const node = (new Node);
+
+  expect(node.size).toBe(0);
+
+  expect(node.get("foo")).toBe("foo");
+
+  expect(node.size).toBe(0);
+  expect(node.toJSON()).toEqual({
+    last     : "",
+    map      : {},
+    selectors: {
+      start  : [],
+      contain: [],
+      end    : [],
+    },
+  });
+});
+
 it("should add new mapped names", () => {
   const node = (new Node);
 

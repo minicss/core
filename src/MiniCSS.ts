@@ -171,13 +171,12 @@ export default class MiniCSS {
   }
 
   /**
-   * Maps the given CSS class to an already generated one or generate a new one.
-   * @param name
+   * Returns the classes node.
    * @example
-   * const name = miniCSS.class("class");
+   * const classes = miniCSS.classes();
    */
-  public class(name: string): string {
-    return this.#classes.rename(name);
+  public classes(): Node {
+    return this.#classes;
   }
 
   /**
@@ -190,23 +189,21 @@ export default class MiniCSS {
   }
 
   /**
-   * Maps the given CSS id to an already generated one or generate a new one.
-   * @param name
+   * Returns the ids node.
    * @example
-   * const name = miniCSS.id("id");
+   * const ids = miniCSS.ids();
    */
-  public id(name: string): string {
-    return this.#ids.rename(name);
+  public ids(): Node {
+    return this.#ids;
   }
 
   /**
-   * Maps the given CSS variable to an already generated one or generate a new one.
-   * @param name
+   * Returns the keyframes node.
    * @example
-   * const name = miniCSS.keyframe("keyframe");
+   * const keyframes = miniCSS.keyframes();
    */
-  public keyframe(name: string): string {
-    return this.#keyframes.rename(name);
+  public keyframes(): Node {
+    return this.#keyframes;
   }
 
   /**
@@ -238,13 +235,12 @@ export default class MiniCSS {
   }
 
   /**
-   * Maps the given CSS variable to an already generated one or generate a new one.
-   * @param name
+   * Returns the variables node.
    * @example
-   * const name = miniCSS.variable("variable");
+   * const variables = miniCSS.variables();
    */
-  public variable(name: string): string {
-    return this.#variables.rename(name);
+  public variables(): Node {
+    return this.#variables;
   }
 
 }
