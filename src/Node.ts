@@ -238,6 +238,23 @@ export default class Node extends Map<string, string> {
   }
 
   /**
+   * Brings the node to its initial empty state.
+   * @example
+   * node = node.clear();
+   */
+  public clear(): this {
+    this.#containSelectors = [];
+    this.#endSelectors = [];
+    this.#startSelectors = [];
+
+    this.#last = "";
+
+    super.clear();
+
+    return this;
+  }
+
+  /**
    * Creates a clone of the current node instance.
    * @example
    * const clone = node.clone();
@@ -342,6 +359,19 @@ export default class Node extends Map<string, string> {
     }
 
     return this.get(name);
+  }
+
+  /**
+   * Sets a replacement for the given name.
+   * @param name
+   * @param replacement
+   * @example
+   * node = node.set("name", "replacement");
+   */
+  public set(name: string, replacement: string): this {
+    if (this.has(name)) throw new Error(`"${ name }" is already set.`);
+
+    return super.set(name, replacement);
   }
 
   /**

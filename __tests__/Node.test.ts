@@ -36,6 +36,26 @@ it("should return original name if not already set", () => {
   });
 });
 
+it("should not reset the existing name", () => {
+  const node = (new Node);
+
+  expect(node.rename("foo")).toBe("_");
+
+  expect(() => node.set("foo", "bar")).toThrowError('"foo" is already set.');
+
+  expect(node.toJSON()).toEqual({
+    last: "_",
+    map : {
+      foo: "_",
+    },
+    selectors: {
+      start  : [],
+      contain: [],
+      end    : [],
+    },
+  });
+});
+
 it("should add new mapped names", () => {
   const node = (new Node);
 
@@ -48,6 +68,70 @@ it("should add new mapped names", () => {
       firstName : "_",
       secondName: "a",
     },
+    selectors: {
+      start  : [],
+      contain: [],
+      end    : [],
+    },
+  });
+});
+
+it("should clear the node", () => {
+  const node = Node.fromJSON({
+    last: "e",
+    map : {
+      "col-"   : "_-",
+      baz      : "a-c-e",
+      something: "-b-",
+      end      : "-d",
+    },
+    selectors: {
+      start: [
+        {
+          value      : "col-",
+          generated  : "_",
+          replacement: "_-",
+        },
+        {
+          value      : "baz",
+          generated  : "a",
+          replacement: "a-",
+        },
+      ],
+      contain: [
+        {
+          value      : "something",
+          generated  : "b",
+          replacement: "-b-",
+        },
+        {
+          value      : "baz",
+          generated  : "c",
+          replacement: "-c-",
+        },
+      ],
+      end: [
+        {
+          value      : "end",
+          generated  : "d",
+          replacement: "-d",
+        },
+        {
+          value      : "baz",
+          generated  : "e",
+          replacement: "-e",
+        },
+      ],
+    },
+  });
+
+  expect(node).toBeInstanceOf(Node);
+
+  expect(node.clear()).toBeInstanceOf(Node);
+
+  expect(node.toJSON()).toEqual({
+    last     : "",
+    map      : {},
     selectors: {
       start  : [],
       contain: [],
