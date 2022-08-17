@@ -60,7 +60,7 @@ jobs:
         run: npm run lint
 
       - name: Build for CommonJS
-        run: npm run build
+        run: npm run build:cjs
 
       - name: Build for ECMAScript
         run: npm run build:esm

@@ -42,11 +42,11 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "tsc",
-    "build:watch": "npm run build -- --watch",
-    "build:esm": "npm run build -- -p tsconfig.esm.json",
+    "build": "scripts/pre-build.sh && npm run build:cjs && npm run build:esm && scripts/post-build.sh",
+    "build:cjs": "tsc",
+    "build:cjs:watch": "npm run build:cjs -- --watch",
+    "build:esm": "tsc -p tsconfig.esm.json",
     "build:esm:watch": "npm run build:esm -- --watch",
-    "build:hybrid": "scripts/pre-build.sh && npm run build && npm run build:esm && scripts/post-build.sh",
     "lint": "eslint src __tests__",
     "lint:fix": "npm run lint -- --fix",
     "docs": "typedoc",
