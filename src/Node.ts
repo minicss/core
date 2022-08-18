@@ -1,5 +1,5 @@
 import { NodeAttributeSelectorI, NodeJSONOutputI, OPERATOR, ProcessedAttributeSelectorI } from "./constants.js";
-import { generate } from "./utils.js";
+import { escape, generate } from "./utils.js";
 
 /**
  *
@@ -264,6 +264,16 @@ export default class Node extends Map<string, string> {
   }
 
   /**
+   * Deletes the given name and returns true if it existed, otherwise returns false.
+   * @param name
+   * @example
+   * const bool = node.delete("name");
+   */
+  public delete(name: string): boolean {
+    return super.delete(escape(name));
+  }
+
+  /**
    * Generates a new string based on the last one in the current node instance.
    * @private
    */
@@ -281,7 +291,17 @@ export default class Node extends Map<string, string> {
    * const name = node.get("name");
    */
   public get(name: string): string {
-    return super.get(name) ?? name;
+    return super.get(escape(name)) ?? name;
+  }
+
+  /**
+   * Checks whether the given name is already generated or not.
+   * @param name
+   * @example
+   * const bool = node.has("name");
+   */
+  public has(name: string): boolean {
+    return super.has(escape(name));
   }
 
   /**
@@ -371,7 +391,7 @@ export default class Node extends Map<string, string> {
   public set(name: string, replacement: string): this {
     if (this.has(name)) throw new Error(`"${ name }" is already set.`);
 
-    return super.set(name, replacement);
+    return super.set(escape(name), escape(replacement));
   }
 
   /**

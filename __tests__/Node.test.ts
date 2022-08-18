@@ -56,6 +56,26 @@ it("should not reset the existing name", () => {
   });
 });
 
+it("should delete the existing name", () => {
+  const node = (new Node);
+
+  expect(node.delete("foo")).toBe(false);
+
+  expect(node.rename("foo")).toBe("_");
+
+  expect(node.delete("foo")).toBe(true);
+
+  expect(node.toJSON()).toEqual({
+    last     : "_",
+    map      : {},
+    selectors: {
+      start  : [],
+      contain: [],
+      end    : [],
+    },
+  });
+});
+
 it("should add new mapped names", () => {
   const node = (new Node);
 

@@ -10,6 +10,18 @@ export const LAST_CHAR = DICTIONARY[DICTIONARY_LENGTH - 1];
 
 export const LAST_CHAR_REGEX = new RegExp(`${ LAST_CHAR }+$`);
 
+export const ESCAPE_CHARACTERS = "#^$.:*+?()[\\]{}|";
+
+export const ESCAPE_CHARACTERS_REGEX = new RegExp(
+  `(?<!\\\\)([${ ESCAPE_CHARACTERS }])`,
+  "g",
+);
+
+export const ESCAPE_BACK_SLASH_REGEX = new RegExp(
+  `(?<!\\\\)\\\\(?![\\\\${ ESCAPE_CHARACTERS }])`,
+  "g",
+);
+
 export enum ATTRIBUTE {
   CLASS = "class",
   ID = "id",

@@ -1,4 +1,11 @@
-import { DICTIONARY, FIRST_CHAR, FIRST_SINGLE_CHAR, LAST_CHAR_REGEX } from "./constants.js";
+import {
+  DICTIONARY,
+  ESCAPE_BACK_SLASH_REGEX,
+  ESCAPE_CHARACTERS_REGEX,
+  FIRST_CHAR,
+  FIRST_SINGLE_CHAR,
+  LAST_CHAR_REGEX,
+} from "./constants.js";
 
 /**
  * Generates a new string based on the last provided one.
@@ -24,4 +31,14 @@ export function generate(last = ""): string {
   }${
     FIRST_CHAR.repeat(match[0].length)
   }`;
+}
+
+/**
+ * Escapes the given name.
+ * @param name
+ */
+export function escape(name: string): string {
+  return name
+    .replaceAll(ESCAPE_BACK_SLASH_REGEX, "\\\\")
+    .replaceAll(ESCAPE_CHARACTERS_REGEX, "\\$1");
 }

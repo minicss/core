@@ -1,4 +1,4 @@
-import { generate } from "../src/utils.js";
+import { escape, generate } from "../src/utils.js";
 
 it("should generate the first name", () => {
   expect(generate()).toBe("_");
@@ -31,4 +31,12 @@ it("should use the next character when ending with Z", () => {
   expect(generate("xZZ")).toBe("y00");
 
   expect(generate("lZZZ")).toBe("m000");
+});
+
+it("should escape identifier", () => {
+  expect(escape("dark:border-[#252525]")).toBe("dark\\:border-\\[\\#252525\\]");
+
+  expect(escape("dark:\\border-[#252525]")).toBe("dark\\:\\\\border-\\[\\#252525\\]");
+
+  expect(escape("border-red-5")).toBe("border-red-5");
 });
